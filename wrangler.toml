@@ -1,0 +1,37 @@
+
+name = "binance-monitor"
+main = "index.js"
+compatibility_date = "2023-10-30"
+
+# Wasm Module binding
+[[wasm_modules]]
+name = "main.wasm"
+path = "./main.wasm"
+
+# Cron Trigger binding
+[triggers]
+crons = ["*/15 * * * *"]
+
+# KV Namespace binding for caching signals
+# IMPORTANT: You must create a KV namespace in your Cloudflare dashboard and paste its ID here.
+[[kv_namespaces]]
+binding = "SIGNAL_CACHE" # This is how you access it in the worker
+id = "YOUR_KV_NAMESPACE_ID_HERE" # <-- PASTE YOUR KV NAMESPACE ID HERE
+
+# Environment Variables
+[vars]
+# Lark Webhook URL for sending notifications
+LARK_WEBHOOK_URL = "YOUR_LARK_WEBHOOK_URL"
+
+# Symbols to monitor, comma-separated
+SYMBOLS = "BTCUSDT,ETHUSDT"
+
+# --- AI Service Configuration ---
+# Your OpenAI-compatible API endpoint
+OPENAI_COMPATIBLE_ENDPOINT = "YOUR_AI_ENDPOINT_HERE"
+
+# The name of the model to use
+AI_MODEL_NAME = "gemini-pro"
+
+# The API Key for your AI service (handled via secrets, not here)
+# Use `wrangler secret put API_KEY` to set this value securely
